@@ -1,6 +1,6 @@
 /* A  function that takes one parameter (a whole number/integer) and checks if numbers from 1 to the given parameter (inclusive) are divisible by 2,3,5 while replacing with the appropriate words.
 */
-const assignWord1 = (num) => {
+const assignWord = (num) => { 
 	//==> A variable and array defined.
 	let arr = [];
 	let currentElem; // to store the value of current Element 
