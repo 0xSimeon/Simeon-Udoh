@@ -1,47 +1,85 @@
-/* A  function that takes one parameter (a whole number/integer) and checks if numbers from 1 to the given parameter (inclusive) are divisible by 2,3,5 while replacing with the appropriate words as specified below.
-
-==>  Numbers divisible by 2 are replaced with "yu"
-
-==> Numbers divisible by 3 are replaced with "gi"
-
-==> Numbers divisible by 5 are replaced with "oh"
-
-==> Numbers are unchanged if not divsible by any of the above
-
-N/B: If a number is divisible by more than one of the above, the words are replaced and joined representing their divsiors, separated by hyphen (-).
-
+/* A  function that takes one parameter (a whole number/integer) and checks if numbers from 1 to the given parameter (inclusive) are divisible by 2,3,5 while replacing with the appropriate words.
 */
-const assignWord = num => {
+const assignWord1 = (num) => {
 	//==> A variable and array defined.
 	let arr = [];
-    let current;
-    
-	// ==> Loop through to get all numbers and check conditions to assign values;
+	let currentElem; // to store the value of current Element 
+
+	//==> Loop through to get all numbers and check conditions to assign values;
 	for (let i = 1; i <= num; i++) {
 		if (i % 2 === 0 && i % 3 === 0 && i % 5 === 0) {
-			current = "yu-gi-oh";
+			currentElem = "yu-gi-oh";
 		} else if (i % 2 === 0 && i % 3 === 0) {
-			current = "yu-gi";
+			currentElem = "yu-gi";
 		} else if (i % 2 === 0 && i % 5 === 0) {
-			current = "yu-oh";
+			currentElem = "yu-oh";
 		} else if (i % 3 === 0 && i % 5 === 0) {
-			current = "gi-oh";
+			currentElem = "gi-oh";
 		} else if (i % 2 === 0) {
-			current = "yu";
+			currentElem = "yu";
 		} else if (i % 3 === 0) {
-			current = "gi";
+			currentElem = "gi";
 		} else if (i % 5 === 0) {
-			current = "oh";
+			currentElem = "oh";
 		} else {
-			current = i;
+			currentElem = i;
 		}
 		//add the current element to the end of arr
-		arr.push(current);
+		arr.push(currentElem);
 	}
 	console.log(arr);
 	// return the value of modified arr;
 	return arr;
-}
+};
 
 // initiating/invoking the function
-assignWord(10); 
+assignWord(100);
+assignWord(10);  
+
+
+
+
+/****************
+ * Alternative Switch case implementation
+ */
+/* const assignWord1 = (num) => {
+	let arr = [];
+	let currentElem;
+	for (let i = 1; i <= num; i++) {
+		switch (true) {
+			case i % 2 === 0 && i % 3 === 0 && i % 5 === 0:
+				currentElem = "yu-gi-oh";
+				break;
+			case i % 2 === 0 && i % 3 === 0:
+				currentElem = "yu-gi";
+				break;
+			case i % 2 === 0 && i % 5 === 0:
+				currentElem = "yu-oh";
+				break;
+			case i % 3 === 0 && i % 5 === 0:
+				currentElem = "gi-oh";
+				break;
+			case i % 2 === 0:
+				currentElem = "yu";
+				break;
+			case i % 3 === 0:
+				currentElem = "gi";
+				break;
+			case i % 5 === 0:
+				currentElem = "oh";
+				break;
+			default:
+				currentElem = i;
+				break;
+		}
+
+		arr.push(currentElem);
+	}
+	console.log(arr);
+	return arr; 
+};
+
+assignWord1(100);
+assignWord1(10);
+
+*/
