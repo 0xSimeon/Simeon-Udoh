@@ -19,18 +19,144 @@ Deadline: 10/05/2020 12:00 AM
 
 */
 
-
-
-
-
-
  // Elements selection
 
  const btnStart = document.getElementById('quiz-start');
- const quiz = document.querySelector('#quiz');
  const footer = document.querySelector('.footer');
- let currentScore = 0;  
- let currentQuestion = 1; 
+ const nextButton = document.querySelector('#next');
+ const quizWrapper = document.querySelector('.quiz__wrapper'); 
+ const quizBox = document.querySelector('.quiz__box'); 
+ const quizQuestion = document.querySelector('.quiz__heading');
+ const quizList = document.querySelector('.quiz__options'); 
+ const quiz = document.querySelector('.quiz');
+ const quizEnd = document.querySelector('#quiz__end');
+ const score = document.querySelector('.quiz__score');
+ let points = 0,  
+ currentQuestion = 1; 
+
+let sortQuestions,
+    currentIndex; 
+  
+function startQuiz () {
+    quizWrapper.classList.add('hide'); 
+     
+    setTimeout(() => {
+        footer.classList.remove('footer-fix'); 
+        quizBox.classList.remove('hide');   
+    }, 500);  
+    
+    currentIndex = 0; 
+    points = 0; 
+    sortQuestions = questions.sort( () => {
+        return Math.random() - .5;  
+    });
+    nextQuesiton();  
+
+    
+}
+
+const resetState = () => {
+    nextButton.classList.add('hide');
+    if (quizList.firstChild) {
+        quizList.innerHTML = "";  
+    }
+     
+}
+
+const nextQuesiton = () => {
+    resetState();
+    showQuestions(sortQuestions[currentIndex]);   
+}
+
+
+
+const showQuestions = (question  => {
+    quizQuestion.textContent = question.question; 
+    question.answers.forEach(answer => {
+        const button = document.createElement('button'); 
+        button.innerHTML = answer.option; 
+        button.classList.add('quiz__options-list');
+        
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', checkAnswer); 
+
+        quizList.appendChild(button);  
+        
+    });
+}); 
+
+
+
+const checkAnswer = (event) => {
+    selectedOption = event.target;
+    correct = selectedOption.dataset.correct;
+    if (correct) {
+        points += 10; 
+    } 
+
+
+    Array.from(quizList.children).forEach(button => {
+        setStatus(button, button.dataset.correct); 
+    }); 
+
+    
+
+    if (sortQuestions.length > currentIndex + 1) {
+        nextButton.classList.remove('hide');
+    } else {
+        showResults(); 
+    }
+
+
+
+}
+
+const setStatus = (element, correct) => {
+    clearStatus(element); 
+    if (correct) {
+        console.log(correct); 
+        element.classList.add('correct'); 
+    } else {
+        element.classList.add('wrong');  
+    }
+
+
+}
+
+const clearStatus = (element) => {
+    element.classList.remove('correct');
+    element.classList.remove('wrong'); 
+}
+
+const showResults = () => {
+
+    quiz.innerHTML = "";
+    footer.classList.add('footer-fix');
+    document.body.classList.add('body-flex');
+    const markup = `
+    <div class="quiz__end quiz-margin">
+        <h1 class="end__heading-1">Game Over!</h1>
+        <h2 class="end__heading-2">
+        Your score is: 
+        </h2>
+        <p class="score">${points}</p>
+        <button id="btn__reload" class="btn__reload next">
+            Return to homepage
+        </button>
+    </div>
+    `;
+
+    quiz.insertAdjacentHTML('afterbegin', markup); 
+    
+    
+}
+
+
+
+
+
 
 
  /*****************************************************************
@@ -41,62 +167,69 @@ Deadline: 10/05/2020 12:00 AM
     
     {
         question: "Inside which HTML element do we put the JavaScript?",
-        A: "javascript",
-        B: "link",
-        C: "style",
-        D: "script",
-        correctAnswer: "C"
-        
+        answers: [
+            {option: '&lt;javascript&gt;', correct: false},
+            {option: '&lt;link&gt;', correct:false},
+            {option: '&lt;style&gt;', correct: false},
+            {option: '&lt;script&gt;',  correct: true}
+        ]  
+  
 
-    },
+    }, 
     
     
     
     {   
-        question: "What is the correct syntax for referring to an external script called 'app.js'?",
-    
-        A:"<script name='app.js'>",
-        B:"<script href='app.js'>",
-        C:"<script src='app.js'>",
-        D:"<script url='app.js'>",
-        correctAnswer: "C"
+        question: `What is the correct syntax for referring to an external script called "app.js"?`,
+        answers:  [
+            {option: '&lt;script name="app.js"&gt;', correct: false},
+            {option: '&lt;script href="app.js"&gt;', correct: false},
+            {option: '&lt;script src="app.js"&gt;', correct: true},
+            {option: '&lt;script url="app.js"&gt;', correct: false} 
+        ]
+        
+        
+        
     },
     
     { 
         "question":"How do you write 'Hello World' in an alert box?",
-    
-        A:"alert('Hello World');",
-        B:"msg('Hello World');",
-        C:"alertBox('Hello World');",
-        D:"prompt('Hello World');",
-        correctAnswer: "A"
+
+        answers: [  
+            {option: "alert('Hello World');", correct: true},
+            {option: "msg('Hello World');", correct: false},
+            {option: "alertBox('Hello World');", correct: false},
+            {option: "prompt('Hello World');",  correct: false}
+        ]  
+
+
     },
      
     
     { 
         question: "How do you create a function in JavaScript?", 
-        A:"function = myFunction(){}",
-        B:"function myFunction(){}",
-        C:"function: myFunction(){}",
-        D:"myFunction() function{}", 
-        correctAnswer: "B"
+
+        answers: [  
+            {option: "function = myFunction() {}", correct: false},
+            {option: "function myFunction() {}", correct: true},
+            {option: "function: myFunction() {}", correct: false},
+            {option: "myFunction() function {}",  correct: false}
+        ]  
 
     },
     
     { 
         question: "How would you call a function called myFunction in javascript?",
-        A:"call myFunction()",
-        B:"myFunction",
-        C:"invoke myFunction",
-        D:"myFunction()",
-        correctAnswer: "D"   
+
+        answers: [  
+            {option: "call myFunction()", correct: false},
+            {option: "myFunction", correct: false},
+            {option: "invoke myFunction", correct: false},
+            {option: "myFunction()",  correct: true}
+        ]  
     }
 
 ]
-
-console.log(questions[0].A);
-
-
 
 
 
@@ -104,85 +237,11 @@ console.log(questions[0].A);
  * EVENT LISTENERS
  */
 
-btnStart.addEventListener('click', (e) => {
-    const markup = `
-    <div class="quiz__box">
-    <div class="quiz__tracker">
-        <p class="quiz__counter">Q: ${currentQuestion}/5</p>
-        <p class="quiz__score">Score ${currentScore}</p> 
-    </div>
-
-    <div class="quiz__text">
-        <h1 class="quiz__heading"> Which one is correct?</h1>
-        <div class="quiz__question">
-        ${questions[3].question} 
-        </div>
-    </div>
-    
-
-    <ul class="quiz__options">
-        <li>
-            <button class="quiz__options-list">
-                <span class="options__color"></span> ${questions[4].A}
-            </button>
-        </li>
-        <li>
-            <button class="quiz__options-list">
-                <span class="options__color"></span> ${questions[4].B}
-            </button>
-        </li>
-        <li>
-            <button class="quiz__options-list">
-                <span class="options__color"></span> ${questions[4].C}
-            </button>
-        </li>
-        <li>
-            <button class="quiz__options-list">
-                <span class="options__color"></span> ${questions[4].D}
-           </button>
-        </li>
-    </ul>
-    <button id="submit" class="submit">Next question</button>
-    
-    `;
-
-    setTimeout(() => {
-        footer.classList.remove('footer-fix'); 
-        quiz.innerHTML = markup; 
-
-
-    }, 500); 
-
-      
-
-
-    
-
-    e.preventDefault();   
-});  
-
-// const getQuestions = questions => {
-//     questions.forEach(question {
-        
-//     }); 
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+btnStart.addEventListener('click', startQuiz); 
+nextButton.addEventListener('click', () => {
+    currentIndex++;
+    nextQuesiton();  
+});
 
 const date = new Date().getFullYear();
 document.querySelector('#year').innerHTML = date; 
