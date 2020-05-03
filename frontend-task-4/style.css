@@ -144,12 +144,11 @@ quiz questions
     transition: all .2s;  
      
 }
-/* .quiz__options-list:focus, */
-.quiz__options-list:hover {
+/* .quiz__options-list:hover {
     background: var(--color-primary);
     border: 2px solid var(--color-tertiary);  
     color: var(--color-text); 
-}
+} */
 
 .next {
     display: block;
@@ -269,5 +268,6 @@ footer a:hover {
         bottom: 0;
         left: 0;
     }
+
 }
 
