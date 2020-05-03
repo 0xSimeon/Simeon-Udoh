@@ -94,6 +94,7 @@ const checkAnswer = (event) => {
     correct = selectedOption.dataset.correct;
     if (correct) {
         points += 10; 
+        
     } 
 
 
@@ -148,7 +149,12 @@ const showResults = () => {
     </div>
     `;
 
-    quiz.insertAdjacentHTML('afterbegin', markup); 
+    quiz.insertAdjacentHTML('afterbegin', markup);
+    
+    document.getElementById('btn__reload').addEventListener('click', (e) => {
+        console.log(e.target); 
+        window.location.reload(); 
+    }); 
     
     
 }
@@ -243,5 +249,7 @@ nextButton.addEventListener('click', () => {
     nextQuesiton();  
 });
 
+
+
 const date = new Date().getFullYear();
-document.querySelector('#year').innerHTML = date; 
+document.querySelector('#year').innerHTML = date;  
