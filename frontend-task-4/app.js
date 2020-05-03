@@ -31,6 +31,8 @@ Deadline: 10/05/2020 12:00 AM
  const quiz = document.querySelector('.quiz');
  const quizEnd = document.querySelector('#quiz__end');
  const score = document.querySelector('.quiz__score');
+ let counter = document.querySelector('.quiz__counter');
+ console.log(counter); 
  let points = 0,  
  currentQuestion = 1; 
 
@@ -85,6 +87,8 @@ const showQuestions = (question  => {
         quizList.appendChild(button);  
         
     });
+
+    counter.innerText = `Q: ${(currentIndex + 1)} / ${sortQuestions.length}`
 }); 
 
 
@@ -93,8 +97,11 @@ const checkAnswer = (event) => {
     selectedOption = event.target;
     correct = selectedOption.dataset.correct;
     if (correct) {
-        points += 10; 
         
+        points += 10; 
+        score.textContent = `Score: ${points}`;
+        
+        console.log(score); 
     } 
 
 
@@ -116,8 +123,7 @@ const checkAnswer = (event) => {
 
 const setStatus = (element, correct) => {
     clearStatus(element); 
-    if (correct) {
-        console.log(correct); 
+    if (correct) { 
         element.classList.add('correct'); 
     } else {
         element.classList.add('wrong');  
@@ -151,19 +157,11 @@ const showResults = () => {
 
     quiz.insertAdjacentHTML('afterbegin', markup);
     
-    document.getElementById('btn__reload').addEventListener('click', (e) => {
-        console.log(e.target); 
+    document.getElementById('btn__reload').addEventListener('click', () => {
         window.location.reload(); 
     }); 
-    
-    
+   
 }
-
-
-
-
-
-
 
  /*****************************************************************
   * Questions
@@ -179,8 +177,6 @@ const showResults = () => {
             {option: '&lt;style&gt;', correct: false},
             {option: '&lt;script&gt;',  correct: true}
         ]  
-  
-
     }, 
     
     
