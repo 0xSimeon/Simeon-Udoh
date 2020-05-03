@@ -67,7 +67,7 @@ h1 {
     font-size: 1.8em; 
     color: var(--color-text);  
     background: var(--color-tertiary); 
-    box-shadow: .5rem 1rem 2rem var(--color-primary); 
+    box-shadow: 0 0 1.5rem 2px;   
     border: 3px solid var(--color-primary);
     transition: all .2s;  
     
@@ -108,15 +108,18 @@ quiz questions
 }
 
 
-.quiz__question {
+.quiz__heading {
     font-size: 2em; 
-    font-weight: 400; 
+    font-weight: bold; 
     color: var(--color-primary); 
-    padding: 1rem;  
+    padding: 1rem; 
+    margin-top: 3rem;
+    color: var(--color-primary);
+    padding: 1rem;
+    text-align: center; 
 }
 
 .quiz__options {
-    list-style: none; 
     width: 85%; 
     padding: .5rem; 
     margin: 1.5rem auto; 
@@ -127,15 +130,12 @@ quiz questions
     margin-bottom: 4rem; 
 }
 
-.quiz__options li {
-    margin: 1.5rem auto;  
-    cursor: pointer; 
-}
 
 .quiz__options-list {
     width: 100%; 
     font-size: 1.4em; 
     border-radius: .2rem; 
+    margin: 1.5rem auto;  
     cursor: pointer; 
     padding: 1.5rem 1.7rem; 
     outline: none;   
@@ -151,7 +151,7 @@ quiz questions
     color: var(--color-text); 
 }
 
-.submit {
+.next {
     display: block;
     padding: 1.2rem 3.5rem;
     border-radius: 3rem;  
@@ -165,7 +165,7 @@ quiz questions
     transition: all .2s; 
 }
 
-.submit:hover {
+.next:hover {
     background:   var(--color-tertiary);
     border: 5px solid   var(--color-primary);  
 }
@@ -201,17 +201,59 @@ footer a:hover {
 .footer-fix {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 0; 
 }
 
 
-.flex__center {
+
+.correct {
+    background: rgb(48, 218, 48); 
+}
+
+.wrong {
+    background: red; 
+}
+
+.body-flex {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.end__heading-2 {
+    font-size: 2.5em;
+}
+
+.score {
+    font-size: 9em;
+    background: lightgreen;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.quiz-margin {
+    margin-top: -12rem;
+}
+
+.quiz__end {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
 }
+
+.btn__reload {
+    margin-top: 4rem; 
+} 
+
+.hide {
+    display: none; 
+}
+
+
+
+
 
 /***************************
 * MEDIA QUERY 
@@ -220,6 +262,12 @@ footer a:hover {
 @media only screen and (max-width: 31.25em) {
     html {
         font-size: 50%; 
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 }
 
