@@ -30,8 +30,8 @@ Deadline: 10/05/2020 12:00 AM
  const quizList = document.querySelector('.quiz__options'); 
  const quiz = document.querySelector('.quiz');
  const quizEnd = document.querySelector('#quiz__end');
- const score = document.querySelector('.quiz__score');
- let counter = document.querySelector('.quiz__counter');
+ const score = document.querySelector('.quiz__score-number');
+ let counter = document.querySelector('.quiz__counter-number');
  console.log(counter); 
  let points = 0,  
  currentQuestion = 1; 
@@ -82,13 +82,15 @@ const showQuestions = (question  => {
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
+        quizList.classList.remove('pointer-fix');
         button.addEventListener('click', checkAnswer); 
 
-        quizList.appendChild(button);  
+        quizList.appendChild(button); 
+
         
     });
 
-    counter.innerText = `Q: ${(currentIndex + 1)} / ${sortQuestions.length}`
+    counter.innerText = `${(currentIndex + 1)} of ${sortQuestions.length}`
 }); 
 
 
@@ -97,16 +99,16 @@ const checkAnswer = (event) => {
     selectedOption = event.target;
     correct = selectedOption.dataset.correct;
     if (correct) {
-        
         points += 10; 
-        score.textContent = `Score: ${points}`;
-        
-        console.log(score); 
+        score.textContent = `${points}`;
+        quizList.classList.add('pointer-fix');
+
     } 
 
 
     Array.from(quizList.children).forEach(button => {
         setStatus(button, button.dataset.correct); 
+        button.classList.add('white'); 
     }); 
 
     
@@ -128,9 +130,9 @@ const setStatus = (element, correct) => {
     } else {
         element.classList.add('wrong');  
     }
-
-
 }
+
+
 
 const clearStatus = (element) => {
     element.classList.remove('correct');
