@@ -19,132 +19,119 @@ Deadline: 10/05/2020 12:00 AM
 
 */
 
- // Elements selection
+// Elements selection
+const body = document.querySelector(".body");
+const btnStart = document.getElementById("quiz-start");
+const footer = document.querySelector(".footer");
+const nextButton = document.querySelector("#next");
+const quizWrapper = document.querySelector(".quiz__wrapper");
+const quizBox = document.querySelector(".quiz__box");
+const quizQuestion = document.querySelector(".quiz__heading");
+const quizList = document.querySelector(".quiz__options");
+const quiz = document.querySelector(".quiz");
+const quizEnd = document.querySelector("#quiz__end");
+const score = document.querySelector(".quiz__score-number");
+let counter = document.querySelector(".quiz__counter-number");
 
- const btnStart = document.getElementById('quiz-start');
- const footer = document.querySelector('.footer');
- const nextButton = document.querySelector('#next');
- const quizWrapper = document.querySelector('.quiz__wrapper'); 
- const quizBox = document.querySelector('.quiz__box'); 
- const quizQuestion = document.querySelector('.quiz__heading');
- const quizList = document.querySelector('.quiz__options'); 
- const quiz = document.querySelector('.quiz');
- const quizEnd = document.querySelector('#quiz__end');
- const score = document.querySelector('.quiz__score-number');
- let counter = document.querySelector('.quiz__counter-number');
- console.log(counter); 
- let points = 0,  
- currentQuestion = 1; 
+let points = 0;
 
-let sortQuestions,
-    currentIndex; 
-  
-function startQuiz () {
-    quizWrapper.classList.add('hide'); 
-     
-    setTimeout(() => {
-        footer.classList.remove('footer-fix'); 
-        quizBox.classList.remove('hide');   
-    }, 500);  
-    
-    currentIndex = 0; 
-    points = 0; 
-    sortQuestions = questions.sort( () => {
-        return Math.random() - .5;  
-    });
-    nextQuesiton();  
+let sortQuestions, currentIndex, currentQuestion;
 
-    
+body.classList.add("body-flex");
+
+function startQuiz() {
+	quizWrapper.classList.add("hide");
+
+	setTimeout(() => {
+		// footer.classList.remove('footer-fix');
+		body.classList.remove("body-flex");
+		quizBox.classList.remove("hide");
+	}, 500);
+
+	currentIndex = 0;
+	points = 0;
+	sortQuestions = questions.sort(() => {
+		return Math.random() - 0.5;
+	});
+	nextQuesiton();
 }
 
 const resetState = () => {
-    nextButton.classList.add('hide');
-    if (quizList.firstChild) {
-        quizList.innerHTML = "";  
-    }
-     
-}
+	nextButton.classList.add("hide");
+	if (quizList.firstChild) {
+		quizList.innerHTML = "";
+	}
+};
 
 const nextQuesiton = () => {
-    resetState();
-    showQuestions(sortQuestions[currentIndex]);   
-}
+	resetState();
+	currentQuestion = sortQuestions[currentIndex];
+	showQuestions(currentQuestion);
+};
 
+const showQuestions = (question) => {
+	quizQuestion.textContent = question.question;
+	question.answers.forEach((answer, index) => {
+		index += 1;
+		const button = document.createElement("button");
+		button.innerHTML = answer.option;
+		button.classList.add("quiz__options-list");
+		if (answer.correct) {
+			button.dataset.correct = answer.correct;
+		}
+		quizList.classList.remove("pointer-fix");
+		button.addEventListener("click", checkAnswer);
 
+		quizList.appendChild(button);
+	});
 
-const showQuestions = (question  => {
-    quizQuestion.textContent = question.question; 
-    question.answers.forEach(answer => {
-        const button = document.createElement('button'); 
-        button.innerHTML = answer.option; 
-        button.classList.add('quiz__options-list');
-        
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
-        }
-        quizList.classList.remove('pointer-fix');
-        button.addEventListener('click', checkAnswer); 
-
-        quizList.appendChild(button); 
-
-        
-    });
-
-    counter.innerText = `${(currentIndex + 1)} of ${sortQuestions.length}`
-}); 
-
-
+	counter.innerText = `${currentIndex + 1} of ${sortQuestions.length}`;
+};
 
 const checkAnswer = (event) => {
-    selectedOption = event.target;
-    correct = selectedOption.dataset.correct;
-    if (correct) {
-        points += 10; 
-        score.textContent = `${points}`;
-        quizList.classList.add('pointer-fix');
+	selectedOption = event.target;
+	correct = selectedOption.dataset.correct;
 
-    } 
+	clearStatus(selectedOption);
+	if (correct) {
+		points += 10;
+		score.textContent = `${points}`;
+		quizList.classList.add("pointer-fix");
+		selectedOption.classList.add("correct");
+	} else {
+		selectedOption.classList.add("wrong");
+	}
 
+	Array.from(quizList.children).forEach((button) => {
+		setStatus(button, button.dataset.correct);
+	});
 
-    Array.from(quizList.children).forEach(button => {
-        setStatus(button, button.dataset.correct); 
-        button.classList.add('white'); 
-    }); 
-
-    
-
-    if (sortQuestions.length > currentIndex + 1) {
-        nextButton.classList.remove('hide');
-    } else {
-        showResults(); 
-    }
-
-
-
-}
+	if (sortQuestions.length > currentIndex + 1) {
+		nextButton.classList.remove("hide");
+	} else {
+		showResults();
+	}
+};
 
 const setStatus = (element, correct) => {
-    clearStatus(element); 
-    if (correct) { 
-        element.classList.add('correct'); 
-    } else {
-        element.classList.add('wrong');  
-    }
-}
-
-
+	clearStatus(element);
+	if (correct) {
+		element.classList.add("correct");
+	} else {
+		element.classList.add("wrong");
+	}
+};
 
 const clearStatus = (element) => {
-    element.classList.remove('correct');
-    element.classList.remove('wrong'); 
-}
+	element.classList.remove("correct");
+	element.classList.remove("wrong");
+};
 
 const showResults = () => {
-
-    quiz.innerHTML = "";
-    footer.classList.add('footer-fix');
-    document.body.classList.add('body-flex');
-    const markup = `
+	quiz.innerHTML = "";
+	// footer.classList.add('footer-fix');
+	document.body.classList.add("body-flex");
+	const markup = `
     <div class="quiz__end quiz-margin">
         <h1 class="end__heading-1">Game Over!</h1>
         <h2 class="end__heading-2">
@@ -157,97 +144,81 @@ const showResults = () => {
     </div>
     `;
 
-    quiz.insertAdjacentHTML('afterbegin', markup);
-    
-    document.getElementById('btn__reload').addEventListener('click', () => {
-        window.location.reload(); 
-    }); 
-   
-}
+	quiz.insertAdjacentHTML("afterbegin", markup);
 
- /*****************************************************************
-  * Questions
-  */
+	document.getElementById("btn__reload").addEventListener("click", () => {
+		window.location.reload();
+	});
+};
 
- const questions = [
-    
-    {
-        question: "Inside which HTML element do we put the JavaScript?",
-        answers: [
-            {option: '&lt;javascript&gt;', correct: false},
-            {option: '&lt;link&gt;', correct:false},
-            {option: '&lt;style&gt;', correct: false},
-            {option: '&lt;script&gt;',  correct: true}
-        ]  
-    }, 
-    
-    
-    
-    {   
-        question: `What is the correct syntax for referring to an external script called "app.js"?`,
-        answers:  [
-            {option: '&lt;script name="app.js"&gt;', correct: false},
-            {option: '&lt;script href="app.js"&gt;', correct: false},
-            {option: '&lt;script src="app.js"&gt;', correct: true},
-            {option: '&lt;script url="app.js"&gt;', correct: false} 
-        ]
-        
-        
-        
-    },
-    
-    { 
-        "question":"How do you write 'Hello World' in an alert box?",
+/*****************************************************************
+ * Questions
+ */
 
-        answers: [  
-            {option: "alert('Hello World');", correct: true},
-            {option: "msg('Hello World');", correct: false},
-            {option: "alertBox('Hello World');", correct: false},
-            {option: "prompt('Hello World');",  correct: false}
-        ]  
+const questions = [
+	{
+		question: "Inside which HTML element do we put the JavaScript?",
+		answers: [
+			{ option: "&lt;javascript&gt;", correct: false },
+			{ option: "&lt;link&gt;", correct: false },
+			{ option: "&lt;style&gt;", correct: false },
+			{ option: "&lt;script&gt;", correct: true },
+		],
+	},
 
+	{
+		question: `What is the correct syntax for referring to an external script called "app.js"?`,
+		answers: [
+			{ option: '&lt;script name="app.js"&gt;', correct: false },
+			{ option: '&lt;script href="app.js"&gt;', correct: false },
+			{ option: '&lt;script src="app.js"&gt;', correct: true },
+			{ option: '&lt;script url="app.js"&gt;', correct: false },
+		],
+	},
 
-    },
-     
-    
-    { 
-        question: "How do you create a function in JavaScript?", 
+	{
+		question: "How do you write 'Hello World' in an alert box?",
 
-        answers: [  
-            {option: "function = myFunction() {}", correct: false},
-            {option: "function myFunction() {}", correct: true},
-            {option: "function: myFunction() {}", correct: false},
-            {option: "myFunction() function {}",  correct: false}
-        ]  
+		answers: [
+			{ option: "alert('Hello World');", correct: true },
+			{ option: "msg('Hello World');", correct: false },
+			{ option: "alertBox('Hello World');", correct: false },
+			{ option: "prompt('Hello World');", correct: false },
+		],
+	},
 
-    },
-    
-    { 
-        question: "How would you call a function called myFunction in javascript?",
+	{
+		question: "How do you create a function in JavaScript?",
 
-        answers: [  
-            {option: "call myFunction()", correct: false},
-            {option: "myFunction", correct: false},
-            {option: "invoke myFunction", correct: false},
-            {option: "myFunction()",  correct: true}
-        ]  
-    }
+		answers: [
+			{ option: "function = myFunction() {}", correct: false },
+			{ option: "function myFunction() {}", correct: true },
+			{ option: "function: myFunction() {}", correct: false },
+			{ option: "myFunction() function {}", correct: false },
+		],
+	},
 
-]
+	{
+		question: "How would you call a function called myFunction in javascript?",
 
-
+		answers: [
+			{ option: "call myFunction()", correct: false },
+			{ option: "myFunction", correct: false },
+			{ option: "invoke myFunction", correct: false },
+			{ option: "myFunction()", correct: true },
+		],
+	},
+];
 
 /*************************************
  * EVENT LISTENERS
  */
 
-btnStart.addEventListener('click', startQuiz); 
-nextButton.addEventListener('click', () => {
-    currentIndex++;
-    nextQuesiton();  
+btnStart.addEventListener("click", startQuiz);
+nextButton.addEventListener("click", () => {
+	currentIndex++;
+	nextQuesiton();
 });
 
-
-
-const date = new Date().getFullYear();
-document.querySelector('#year').innerHTML = date;  
+// const date = new Date().getFullYear();
+// document.querySelector('#year').innerHTML = date;
