@@ -1,64 +1,234 @@
-/*    
+// Elements selection
+const body = document.querySelector(".body");
+const btnStart = document.getElementById("quiz-start");
+const nextButton = document.querySelector("#next");
+const quizWrapper = document.querySelector(".quiz__wrapper");
+const quizBox = document.querySelector(".quiz__box");
+const quizQuestion = document.querySelector(".quiz__heading");
+const quizList = document.querySelector(".quiz__options");
+const quiz = document.querySelector(".quiz");
+const score = document.querySelector(".quiz__score-number");
+let counter = document.querySelector(".quiz__counter-number");
 
-Task
-Build a responsive quiz game. Your quiz game should function according to these specifications: 
+// TRACKERS 
+let points = 0,
+	count = 0,
+	option1,
+	option2,
+	option3,
+	option4;
 
-It must have 5 questions of any topic of your choice
-Each question must have a minimum of 3 options- 1 correct option and 2 or more wrong options.
-A user can click an option to answer a question. If the correct option is clicked, the option is given a green background with a white text. If it's wrong, then it is given a red background with white text while the correct option is given a green background and white text.
-It has a visible score counter that records how many questions have been correctly answered.
-It has a next button that can be clicked to display the next question.
-The game ends after the 5th question and shows the total attained score.
-Submission: 
-Submit the GITHUB PAGES link. This link should be your HOSTED version of the app. 
+let sortQuestions, currentIndex, currentQuestion;
 
-Total Obtainable Points: 10
+body.classList.add("body-flex");
+
+function startQuiz() {
+	quizWrapper.classList.add("hide");
+
+	setTimeout(() => {
+		body.classList.remove("body-flex");
+		quizBox.classList.remove("hide");
+	}, 500);
+
+	currentIndex = 0;
+	points = 0;
+
+	// sort and randomize the questions. 
+	sortQuestions = questions.sort(() => {
+		return Math.random() - 0.5;
+	});
+	nextQuesiton();
+}
 
 
-Deadline: 10/05/2020 12:00 AM
+// Clear previous quiz questions and options & hide next button
+const resetState = () => {
+	nextButton.classList.add("hide");
+	if (quizList.firstChild) {
+		quizList.innerHTML = "";
+	}
+};
 
-*/
+const nextQuesiton = () => {
+	resetState();
+	currentQuestion = sortQuestions[currentIndex];
+	showQuestions(currentQuestion);
+};
 
-
-/*************************************************
- * QUESTIONS 
+/************************************************************
+ * Display the questions on the quiz page
  */
-/*
-1. Inside which HTML element do we put the JavaScript?
-<javascript>
-<link>
-<style>
-<script>
 
+const showQuestions = (question) => {
+	quizQuestion.textContent = question.question;
 
+	question.options.forEach((option, index) => {
+		index++;
+		const button = document.createElement("button");
+		button.innerHTML = option;
+		button.classList.add("quiz__options-list");
+		button.classList.add(`quiz__options-list-${index}`);
+		quizList.classList.remove("pointer-fix");
 
-2. What is the correct syntax for referring to an external script called "app.js"?
+		quizList.appendChild(button);
 
-<script src="xxx.js">
-<script href="xxx.js">
-<script name="xxx.js">
-<script url="app.js">
+		if (question.answer === index) {
+			button.dataset.correct = question.answer;
+		}
+		option1 = document.querySelector(".quiz__options-list-1");
+		option2 = document.querySelector(".quiz__options-list-2");
+		option3 = document.querySelector(".quiz__options-list-3");
+		option4 = document.querySelector(".quiz__options-list-4");
+		button.addEventListener("click", checkAnswer);
+	});
+};
 
-3. How do you write "Hello World" in an alert box?
+/**********************************
+ * Check if the selected option is correct or wrong
+ */
 
-alert("Hello World");
-msg("Hello World");
-alertBox("Hello World");
-promt("Hello World");
- 
+const checkAnswer = (event) => {
+	const selectedOption = event.target;
+	const correct = selectedOption.dataset.correct;
 
-4. How do you create a function in JavaScript? 
-function = myFunction(){}
-function myFunction(){}
-function: myFunction(){}
-myFunction() function{} 
+	if (correct) {
+		count++;
+		points += 10;
+		score.textContent = `${points}`;
+		quizList.classList.add("pointer-fix");
+		selectedOption.classList.add("correct");
+		selectedOption.classList.add("white");
 
-5. How would you call a function called myFunction in javascript?
-call myFunction()
-myFunction
-invoke myFunction
-myFunction() 
-*/
+		// Keep track of correct answers
+		counter.innerText = `${count} of ${sortQuestions.length}`;
+	} else {
+		selectedOption.classList.add("wrong");
+		selectedOption.classList.add("white");
 
-const date = new Date().getFullYear();
-document.querySelector('#year').innerHTML = date; 
+		// check and add green background to correct option
+		if (currentQuestion.answer === 1) {
+			option1.classList.add("correct");
+		} else if (currentQuestion.answer === 2) {
+			option2.classList.add("correct");
+		} else if (currentQuestion.answer === 3) {
+			option3.classList.add("correct");
+		} else if (currentQuestion.answer === 4) {
+			option4.classList.add("correct");
+		}
+	}
+
+	if (sortQuestions.length > currentIndex + 1) {
+		nextButton.classList.remove("hide");
+	} else {
+		// Small delay before showing scores page;
+		setTimeout(() => {
+			showResults();
+		}, 600);
+	}
+};
+
+/*****************************
+ * RESULTS PAGE
+ */
+
+const showResults = () => {
+	quiz.innerHTML = "";
+	document.body.classList.add("body-flex");
+	const markup = `
+    <div class="quiz__end">
+        <h1 class="end__heading-1">Game Over!</h1>
+        <h2 class="end__heading-2">
+        Your score is: 
+        </h2>
+        <p class="score">${points}</p>
+        <button id="btn__reload" class="btn__reload next">
+            Return to homepage
+        </button>
+    </div>
+    `;
+
+	quiz.insertAdjacentHTML("afterbegin", markup);
+
+	document.getElementById("btn__reload").addEventListener("click", () => {
+		window.location.reload();
+	});
+};
+
+/*****************************************************************
+ * Questions
+ */
+
+const questions = [
+	{
+		question: "Inside which HTML element do we put the JavaScript?",
+		options: [
+			'&lt;javascript&gt;',
+			'&lt;link&gt;',
+			'&lt;style&gt;',
+			'&lt;script&gt;',
+		],
+		answer: 4,
+	},
+
+	{
+		question: `What is the correct syntax for referring to an external script called "app.js"?`,
+		options: [
+			'&lt;script name="app.js"&gt;',
+			'&lt;script href="app.js"&gt;',
+			'&lt;script src="app.js"&gt;',
+			'&lt;script url="app.js"&gt;',
+		],
+		answer: 3,
+	},
+
+	{
+		question: `How do you write "Hello World" in an alert box?`,
+
+		options: [
+			`alert('Hello World');`,
+			`msg('Hello World');`,
+			`alertBox('Hello World');`,
+			`prompt('Hello World');`,
+		],
+		answer: 1,
+	},
+
+	{
+		question: 'How do you create a function in JavaScript?',
+
+		options: [
+			'function = myFunction() { }',
+			'function myFunction() { }',
+			'function: myFunction() { }',
+			'myFunction() function { }',
+		],
+		answer: 2,
+	},
+
+	{
+		question: 'How would you call a function called myFunction in javascript?',
+
+		options: [
+			'call myFunction()',
+			'myFunction',
+			'invoke myFunction',
+			'myFunction()',
+		],
+		answer: 4,
+	},
+];
+
+/*************************************
+ * EVENT LISTENERS
+ */
+
+btnStart.addEventListener("click", startQuiz);
+nextButton.addEventListener("click", () => {
+	currentIndex++;
+	nextQuesiton();
+}); 
+
+console.log(`Copyright 2020. 
+Made by Simeon Udoh
+`); 
+

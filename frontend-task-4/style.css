@@ -1,7 +1,7 @@
 :root {
     --color-primary: #364f6b;
     --color-secondary: #fc5185;  
-    --color-tertiary: #3fc1c9;  
+    --color-tertiary: 63, 193, 201;  
     --color-text: #f5f5f5; 
 }
 *,
@@ -18,8 +18,10 @@ html {
 }
 
 body {
-    font-size: 1em; 
-    background-color: var(--color-text);   
+    font-size: 1em;  
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400; 
+    background-color: rgba(var(--color-tertiary), .2);     
     background-image: url("https://res.cloudinary.com/dlu8hugb3/image/upload/v1587145406/bg-form-desktop.png");
     background-blend-mode: normal;
     background-size: cover;
@@ -34,6 +36,9 @@ h1 {
     padding: 1.5rem;
 }
 
+.quiz__wrapper-heading::first-letter {
+    font-size: 3em; 
+}
 
 
 .quiz {
@@ -44,21 +49,21 @@ h1 {
 }
 
 .quiz__wrapper {
-    margin-top: 3rem;
-    padding: 3rem;  
+    padding: 3rem;
+
 }
 
 
 .quiz__sub-heading {
     text-align: center;
     font-size: 3em;
-    margin-top: 4rem; 
-    padding: 1.5rem;
+    margin-top: 2rem; 
+    padding: 1rem; 
     color: var(--color-secondary);   
 }
 
 .quiz-start {
-    padding: 1.3rem 3rem;
+    padding: 1.3rem 4rem;
     border-radius: 3rem;
     outline: none;
     border: none; 
@@ -66,8 +71,8 @@ h1 {
     margin: 3rem auto 1rem auto; 
     font-size: 1.8em; 
     color: var(--color-text);  
-    background: var(--color-tertiary); 
-    box-shadow: .5rem 1rem 2rem var(--color-primary); 
+    background: rgba(var(--color-tertiary), 1); 
+    box-shadow: 0 0 1.5rem 2px;   
     border: 3px solid var(--color-primary);
     transition: all .2s;  
     
@@ -79,14 +84,14 @@ h1 {
     background: var(--color-primary);
     box-shadow: .5rem 1rem 2rem var(--color-tertiary); 
     border-bottom: 3px solid var(--color-secondary);
-    border-top: 3px solid var(--color-tertiary); 
+    border-top: 3px solid rgba(var(--color-tertiary), 1);  
     border-left: 3px solid var(--color-text);
     border-right: 3px solid var(--color-text);  
  
 }
 
 /***********************************
-quiz questions
+quiz questions styles 
 */
 
 .quiz__box {
@@ -101,41 +106,61 @@ quiz questions
 
 .quiz__counter, .quiz__score {
     text-align: center;
-    font-style: italic; 
-    font-size: 3em; 
+    font-style: italic;  
     font-weight: 700; 
-    color: var(--color-secondary);   
+    color: var(--color-primary);   
+    border: 1.5px solid var(--color-secondary); 
+    padding: 1rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 4px 1px;
+}
+
+.quiz__counter-number,
+.quiz__score-number {
+    font-size: 2em; 
+    font-family: 'Fredericka the Great', cursive; 
+}
+
+.quiz__counter-question, 
+.quiz__score-text {
+    font-size: 1.2em;  
+}
+
+.quiz__info {
+    font-size: 1.8em; 
+    padding: 1rem; 
+    text-align: center;
 }
 
 
-.quiz__question {
-    font-size: 2em; 
-    font-weight: 400; 
+.quiz__heading {
+    font-size: 2.2em; 
+    font-weight: bold; 
     color: var(--color-primary); 
-    padding: 1rem;  
+    padding: 1rem; 
+    margin-top: 1.5rem;
+    color: var(--color-primary);
+    padding: 1rem;
+    text-align: center; 
 }
 
 .quiz__options {
-    list-style: none; 
     width: 85%; 
     padding: .5rem; 
-    margin: 1.5rem auto; 
+    margin: auto; 
 
 }
 
 .quiz__options:last-child {
-    margin-bottom: 4rem; 
+    margin-bottom: 2rem; 
 }
 
-.quiz__options li {
-    margin: 1.5rem auto;  
-    cursor: pointer; 
-}
 
 .quiz__options-list {
     width: 100%; 
-    font-size: 1.4em; 
+    font-size: 1.7em; 
     border-radius: .2rem; 
+    margin: 1rem auto;  
     cursor: pointer; 
     padding: 1.5rem 1.7rem; 
     outline: none;   
@@ -144,16 +169,15 @@ quiz questions
     transition: all .2s;  
      
 }
-/* .quiz__options-list:focus, */
-.quiz__options-list:hover {
-    background: var(--color-primary);
-    border: 2px solid var(--color-tertiary);  
-    color: var(--color-text); 
+
+.next, .quiz-start {
+    cursor: pointer; 
 }
 
-.submit {
+
+.next {
     display: block;
-    padding: 1.2rem 3.5rem;
+    padding: 1.2rem 4rem; 
     border-radius: 3rem;  
     font-size: 1.5em; 
     font-weight: 700;
@@ -165,61 +189,83 @@ quiz questions
     transition: all .2s; 
 }
 
-.submit:hover {
-    background:   var(--color-tertiary);
+.next:hover {
+    background:   rgba(var(--color-tertiary), 1);
     border: 5px solid   var(--color-primary);  
 }
 
-
-
-.footer {
-    padding: 3rem;
-    background: var(--color-primary);
-    font-size: 1.8em;    
-    width: 100%;    
+.pointer-fix {
+    pointer-events: none; 
+}
+.white {
+    color: rgba(255, 255, 255, 1); 
 }
 
-footer a:link,
-footer a:active, 
-footer a:visited {
-    text-decoration: none;  
-    color: var(--color-tertiary); 
-    cursor: pointer; 
+.correct {
+    background: rgb(48, 218, 48); 
 }
 
-footer a:focus,
-footer a:hover {
-    color:  var(--color-secondary); ; 
+.wrong {
+    background: red; 
 }
 
-.footer__text  {
-    text-align: center; 
-    color: var(--color-text); 
-    padding: 1rem; 
+.body-flex {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.footer-fix {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.end__heading-2 {
+    font-size: 2.5em;
+}
+
+.score {
+    font-size: 9em;
+    background: lightgreen;
+    margin-top: 2rem;
+    padding: 1rem;
+    font-weight: 700;
+    font-family: 'Fredericka the Great', cursive;   
 }
 
 
-.flex__center {
+.quiz__end {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
 }
+
+.btn__reload {
+    margin-top: 4rem; 
+} 
+
+.hide {
+    display: none; 
+}
+.bold {
+    font-weight: 700; 
+    color: var(--color-secondary);
+}
+
 
 /***************************
 * MEDIA QUERY 
 */
 
+@media only screen and (max-width: 43.75em) {
+    html {
+        font-size: 56.25%; 
+    } 
+}
+
 @media only screen and (max-width: 31.25em) {
     html {
-        font-size: 50%; 
-    }
+        font-size: 50%;  
+    } 
+
 }
+
+
 

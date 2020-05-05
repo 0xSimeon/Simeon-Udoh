@@ -4,76 +4,53 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Javascript quiz game</title>
-		<link
-			rel="stylesheet"
-			href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/styles/default.min.css"
-		/>
-		<link rel="stylesheet" href="style.css" />
+		<link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="style.css"/>  
 	</head>
-	<body class="">
+	<body class="body">
 		<section id="quiz" class="quiz">
-			<h1> &lt;/Javascript&gt; Pop quiz</h1>
+
+			<!-- Start page content -->
+			
 			<div class="quiz__wrapper">
+				<h1 class="quiz__wrapper-heading">  Javascript  Pop quiz</h1>
 				<h2 class="quiz__sub-heading">
-					Test your Javascript skills!
-				</h2>
-	
-				<button aria-label="quiz start button" id="quiz-start" class="quiz-start">Start quiz</button>
+					Test your Javascript skills!</h2>
+				<button class="quiz-start" id="quiz-start">Start quiz</button>
 			</div>
 			
+			<!-- quiz questions and options box. hidden default -->
+			<div class="quiz__box hide">
+				<div class="quiz__tracker">
 
-			<div class="quiz__box">
-				<!-- <div class="quiz__tracker">
-					<p class="quiz__counter">Q: 1/5</p>
-					<p class="quiz__score">Score: 10</p> 
-				</div> -->
+					<!-- Points and correct anwers counter -->
+					<div class="quiz__counter">
+						<p class="quiz__counter-question">
+							Correct Answers:
+						</p>
+						<p class="quiz__counter-number">0 of 5</p>
+					</div>
+					<div class="quiz__score">
+						<p class="quiz__score-text">
+							Score:
+						</p>
+						<p class="quiz__score-number">0</p>
+					</div>
+				</div>
 
 				<div class="quiz__text">
-					<!-- <h1 class="quiz__heading"> Which one is correct?</h1>
-					<div class="quiz__question">
-						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet animi voluptates dolorem omnis delectus. 
-					</div> -->
+					<h1 class="quiz__heading"> Which one is correct?</h1>
 				</div>
 				
+				<p class="quiz__info"><span class="bold">10 points</span> for every correct answer!</p>
 
-				<!-- <ul class="quiz__options">
-					<li>
-						<button class="quiz__options-list">
-							<span class="options__color"></span> Lorem ipsum dolor sit amet
-						</button>
-					</li>
-					<li>
-						<button class="quiz__options-list">
-							<span class="options__color"></span> Lorem ipsum dolor sit amet
-						</button>
-					</li>
-					<li>
-						<button class="quiz__options-list">
-							<span class="options__color"></span> Lorem ipsum dolor sit amet
-						</button>
-					</li>
-					<li>
-						<button class="quiz__options-list">
-							<span class="options__color"></span> Lorem ipsum dolor sit amet
-						</button>
-					</li>
-				</ul>
-				<button id="submit" class="submit">Next question</button> -->
+				<!-- Quiz options list  -->
+				<div class="quiz__options">
+				</div>
+				<button id="next" class="next">Next question</button>
 			</div>
-			
+
 		</section>
-		<footer class="footer footer-fix">  
-			<p class="footer__text">Copyright &copy; <span id="year"></span>.</p>
-			<p class="footer__text">
-				Developed <i class="fas fa-code"></i> by
-				<a href="http://github.com/simeon4real">Simeon Udoh</a>
-			</p>
-		</footer>
-		<script
-			src="https://kit.fontawesome.com/27c5e12069.js"
-			crossorigin="anonymous"
-		></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
 		<script src="app.js"></script>
 	</body>
 </html>
