@@ -102,6 +102,7 @@ const checkAnswer = (event) => {
 		// Keep track of correct answers
 		counter.innerText = `${count} of ${sortQuestions.length}`;
 	} else {
+		quizList.classList.add("pointer-fix"); 
 		selectedOption.classList.add("wrong");
 		selectedOption.classList.add("white");
 
