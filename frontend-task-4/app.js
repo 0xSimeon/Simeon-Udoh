@@ -1,39 +1,22 @@
-/*    
-
-Task
-Build a responsive quiz game. Your quiz game should function according to these specifications: 
-
-It must have 5 questions of any topic of your choice
-Each question must have a minimum of 3 options- 1 correct option and 2 or more wrong options.
-A user can click an option to answer a question. If the correct option is clicked, the option is given a green background with a white text. If it's wrong, then it is given a red background with white text while the correct option is given a green background and white text.
-It has a visible score counter that records how many questions have been correctly answered.
-It has a next button that can be clicked to display the next question.
-The game ends after the 5th question and shows the total attained score.
-Submission: 
-Submit the GITHUB PAGES link. This link should be your HOSTED version of the app. 
-
-Total Obtainable Points: 10
-
-
-Deadline: 10/05/2020 12:00 AM
-
-*/
-
 // Elements selection
 const body = document.querySelector(".body");
 const btnStart = document.getElementById("quiz-start");
-const footer = document.querySelector(".footer");
 const nextButton = document.querySelector("#next");
 const quizWrapper = document.querySelector(".quiz__wrapper");
 const quizBox = document.querySelector(".quiz__box");
 const quizQuestion = document.querySelector(".quiz__heading");
 const quizList = document.querySelector(".quiz__options");
 const quiz = document.querySelector(".quiz");
-const quizEnd = document.querySelector("#quiz__end");
 const score = document.querySelector(".quiz__score-number");
 let counter = document.querySelector(".quiz__counter-number");
 
-let points = 0;
+// TRACKERS 
+let points = 0,
+	count = 0,
+	option1,
+	option2,
+	option3,
+	option4;
 
 let sortQuestions, currentIndex, currentQuestion;
 
@@ -43,19 +26,22 @@ function startQuiz() {
 	quizWrapper.classList.add("hide");
 
 	setTimeout(() => {
-		// footer.classList.remove('footer-fix');
 		body.classList.remove("body-flex");
 		quizBox.classList.remove("hide");
 	}, 500);
 
 	currentIndex = 0;
 	points = 0;
+
+	// sort and randomize the questions. 
 	sortQuestions = questions.sort(() => {
 		return Math.random() - 0.5;
 	});
 	nextQuesiton();
 }
 
+
+// Clear previous quiz questions and options & hide next button
 const resetState = () => {
 	nextButton.classList.add("hide");
 	if (quizList.firstChild) {
@@ -69,70 +55,87 @@ const nextQuesiton = () => {
 	showQuestions(currentQuestion);
 };
 
+/************************************************************
+ * Display the questions on the quiz page
+ */
+
 const showQuestions = (question) => {
 	quizQuestion.textContent = question.question;
-	question.answers.forEach((answer, index) => {
-		index += 1;
+
+	question.options.forEach((option, index) => {
+		index++;
 		const button = document.createElement("button");
-		button.innerHTML = answer.option;
+		button.innerHTML = option;
 		button.classList.add("quiz__options-list");
-		if (answer.correct) {
-			button.dataset.correct = answer.correct;
-		}
+		button.classList.add(`quiz__options-list-${index}`);
 		quizList.classList.remove("pointer-fix");
-		button.addEventListener("click", checkAnswer);
 
 		quizList.appendChild(button);
-	});
 
-	counter.innerText = `${currentIndex + 1} of ${sortQuestions.length}`;
+		if (question.answer === index) {
+			button.dataset.correct = question.answer;
+		}
+		option1 = document.querySelector(".quiz__options-list-1");
+		option2 = document.querySelector(".quiz__options-list-2");
+		option3 = document.querySelector(".quiz__options-list-3");
+		option4 = document.querySelector(".quiz__options-list-4");
+		button.addEventListener("click", checkAnswer);
+	});
 };
 
-const checkAnswer = (event) => {
-	selectedOption = event.target;
-	correct = selectedOption.dataset.correct;
+/**********************************
+ * Check if the selected option is correct or wrong
+ */
 
-	clearStatus(selectedOption);
+const checkAnswer = (event) => {
+	const selectedOption = event.target;
+	const correct = selectedOption.dataset.correct;
+
 	if (correct) {
+		count++;
 		points += 10;
 		score.textContent = `${points}`;
 		quizList.classList.add("pointer-fix");
 		selectedOption.classList.add("correct");
+		selectedOption.classList.add("white");
+
+		// Keep track of correct answers
+		counter.innerText = `${count} of ${sortQuestions.length}`;
 	} else {
 		selectedOption.classList.add("wrong");
-	}
+		selectedOption.classList.add("white");
 
-	Array.from(quizList.children).forEach((button) => {
-		setStatus(button, button.dataset.correct);
-	});
+		// check and add green background to correct option
+		if (currentQuestion.answer === 1) {
+			option1.classList.add("correct");
+		} else if (currentQuestion.answer === 2) {
+			option2.classList.add("correct");
+		} else if (currentQuestion.answer === 3) {
+			option3.classList.add("correct");
+		} else if (currentQuestion.answer === 4) {
+			option4.classList.add("correct");
+		}
+	}
 
 	if (sortQuestions.length > currentIndex + 1) {
 		nextButton.classList.remove("hide");
 	} else {
-		showResults();
+		// Small delay before showing scores page;
+		setTimeout(() => {
+			showResults();
+		}, 600);
 	}
 };
 
-const setStatus = (element, correct) => {
-	clearStatus(element);
-	if (correct) {
-		element.classList.add("correct");
-	} else {
-		element.classList.add("wrong");
-	}
-};
-
-const clearStatus = (element) => {
-	element.classList.remove("correct");
-	element.classList.remove("wrong");
-};
+/*****************************
+ * RESULTS PAGE
+ */
 
 const showResults = () => {
 	quiz.innerHTML = "";
-	// footer.classList.add('footer-fix');
 	document.body.classList.add("body-flex");
 	const markup = `
-    <div class="quiz__end quiz-margin">
+    <div class="quiz__end">
         <h1 class="end__heading-1">Game Over!</h1>
         <h2 class="end__heading-2">
         Your score is: 
@@ -158,55 +161,60 @@ const showResults = () => {
 const questions = [
 	{
 		question: "Inside which HTML element do we put the JavaScript?",
-		answers: [
-			{ option: "&lt;javascript&gt;", correct: false },
-			{ option: "&lt;link&gt;", correct: false },
-			{ option: "&lt;style&gt;", correct: false },
-			{ option: "&lt;script&gt;", correct: true },
+		options: [
+			'&lt;javascript&gt;',
+			'&lt;link&gt;',
+			'&lt;style&gt;',
+			'&lt;script&gt;',
 		],
+		answer: 4,
 	},
 
 	{
 		question: `What is the correct syntax for referring to an external script called "app.js"?`,
-		answers: [
-			{ option: '&lt;script name="app.js"&gt;', correct: false },
-			{ option: '&lt;script href="app.js"&gt;', correct: false },
-			{ option: '&lt;script src="app.js"&gt;', correct: true },
-			{ option: '&lt;script url="app.js"&gt;', correct: false },
+		options: [
+			'&lt;script name="app.js"&gt;',
+			'&lt;script href="app.js"&gt;',
+			'&lt;script src="app.js"&gt;',
+			'&lt;script url="app.js"&gt;',
 		],
+		answer: 3,
 	},
 
 	{
-		question: "How do you write 'Hello World' in an alert box?",
+		question: `How do you write "Hello World" in an alert box?`,
 
-		answers: [
-			{ option: "alert('Hello World');", correct: true },
-			{ option: "msg('Hello World');", correct: false },
-			{ option: "alertBox('Hello World');", correct: false },
-			{ option: "prompt('Hello World');", correct: false },
+		options: [
+			`alert('Hello World');`,
+			`msg('Hello World');`,
+			`alertBox('Hello World');`,
+			`prompt('Hello World');`,
 		],
+		answer: 1,
 	},
 
 	{
-		question: "How do you create a function in JavaScript?",
+		question: 'How do you create a function in JavaScript?',
 
-		answers: [
-			{ option: "function = myFunction() {}", correct: false },
-			{ option: "function myFunction() {}", correct: true },
-			{ option: "function: myFunction() {}", correct: false },
-			{ option: "myFunction() function {}", correct: false },
+		options: [
+			'function = myFunction() { }',
+			'function myFunction() { }',
+			'function: myFunction() { }',
+			'myFunction() function { }',
 		],
+		answer: 2,
 	},
 
 	{
-		question: "How would you call a function called myFunction in javascript?",
+		question: 'How would you call a function called myFunction in javascript?',
 
-		answers: [
-			{ option: "call myFunction()", correct: false },
-			{ option: "myFunction", correct: false },
-			{ option: "invoke myFunction", correct: false },
-			{ option: "myFunction()", correct: true },
+		options: [
+			'call myFunction()',
+			'myFunction',
+			'invoke myFunction',
+			'myFunction()',
 		],
+		answer: 4,
 	},
 ];
 
@@ -218,7 +226,9 @@ btnStart.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
 	currentIndex++;
 	nextQuesiton();
-});
+}); 
 
-// const date = new Date().getFullYear();
-// document.querySelector('#year').innerHTML = date;
+console.log(`Copyright 2020. 
+Made by Simeon Udoh
+`); 
+
