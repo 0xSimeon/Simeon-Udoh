@@ -257,7 +257,14 @@ quiz questions styles
 @media only screen and (max-width: 43.75em) {
     html {
         font-size: 56.25%; 
-    } 
+	} 
+	
+	.quiz__counter-number,
+	.quiz__score-number {
+        font-size: 3em;
+        font-weight: 700; 
+
+	}
 }
 
 @media only screen and (max-width: 31.25em) {
