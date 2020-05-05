@@ -18,7 +18,9 @@ html {
 }
 
 body {
-    font-size: 1em; 
+    font-size: 1em;  
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400; 
     background-color: rgba(var(--color-tertiary), .2);     
     background-image: url("https://res.cloudinary.com/dlu8hugb3/image/upload/v1587145406/bg-form-desktop.png");
     background-blend-mode: normal;
@@ -34,6 +36,9 @@ h1 {
     padding: 1.5rem;
 }
 
+.quiz__wrapper-heading::first-letter {
+    font-size: 3em; 
+}
 
 
 .quiz {
@@ -44,21 +49,21 @@ h1 {
 }
 
 .quiz__wrapper {
-    margin-top: 3rem;
-    padding: 3rem;  
+    padding: 3rem;
+
 }
 
 
 .quiz__sub-heading {
     text-align: center;
     font-size: 3em;
-    margin-top: 4rem; 
-    padding: 1.5rem;
+    margin-top: 2rem; 
+    padding: 1rem; 
     color: var(--color-secondary);   
 }
 
 .quiz-start {
-    padding: 1.3rem 3rem;
+    padding: 1.3rem 4rem;
     border-radius: 3rem;
     outline: none;
     border: none; 
@@ -86,7 +91,7 @@ h1 {
 }
 
 /***********************************
-quiz questions
+quiz questions styles 
 */
 
 .quiz__box {
@@ -112,26 +117,28 @@ quiz questions
 
 .quiz__counter-number,
 .quiz__score-number {
-    font-size: 3.5em; 
+    font-size: 2em; 
+    font-family: 'Fredericka the Great', cursive; 
 }
 
 .quiz__counter-question, 
 .quiz__score-text {
-    font-size: 1em;  
+    font-size: 1.2em;  
 }
 
 .quiz__info {
-    font-size: 2em;
+    font-size: 1.8em; 
     padding: 1rem; 
+    text-align: center;
 }
 
 
 .quiz__heading {
-    font-size: 2.5em; 
+    font-size: 2.2em; 
     font-weight: bold; 
     color: var(--color-primary); 
     padding: 1rem; 
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     color: var(--color-primary);
     padding: 1rem;
     text-align: center; 
@@ -145,7 +152,7 @@ quiz questions
 }
 
 .quiz__options:last-child {
-    margin-bottom: 4rem; 
+    margin-bottom: 2rem; 
 }
 
 
@@ -163,10 +170,14 @@ quiz questions
      
 }
 
+.next, .quiz-start {
+    cursor: pointer; 
+}
+
 
 .next {
     display: block;
-    padding: 1.2rem 3.5rem;
+    padding: 1.2rem 4rem; 
     border-radius: 3rem;  
     font-size: 1.5em; 
     font-weight: 700;
@@ -187,44 +198,8 @@ quiz questions
     pointer-events: none; 
 }
 .white {
-    color: rgba(255, 255, 255, .8); 
+    color: rgba(255, 255, 255, 1); 
 }
-
-
-
-.footer {
-    padding: 3rem;
-    background: var(--color-primary);
-    font-size: 1.8em;    
-    width: 100%;    
-}
-
-footer a:link,
-footer a:active, 
-footer a:visited {
-    text-decoration: none;  
-    color: var(--color-tertiary); 
-    cursor: pointer; 
-}
-
-footer a:focus,
-footer a:hover {
-    color:  var(--color-secondary); ; 
-}
-
-.footer__text  {
-    text-align: center; 
-    color: var(--color-text); 
-    padding: 1rem; 
-}
-
-.footer-fix {
-    position: absolute;
-    bottom: 0;
-    left: 0; 
-}
-
-
 
 .correct {
     background: rgb(48, 218, 48); 
@@ -250,11 +225,10 @@ footer a:hover {
     background: lightgreen;
     margin-top: 2rem;
     padding: 1rem;
+    font-weight: 700;
+    font-family: 'Fredericka the Great', cursive;   
 }
 
-.quiz-margin {
-    margin-top: -12rem;
-}
 
 .quiz__end {
     display: flex;
@@ -270,19 +244,28 @@ footer a:hover {
 .hide {
     display: none; 
 }
-
-
-
+.bold {
+    font-weight: 700; 
+    color: var(--color-secondary);
+}
 
 
 /***************************
 * MEDIA QUERY 
 */
 
-@media only screen and (max-width: 31.25em) {
+@media only screen and (max-width: 43.75em) {
     html {
         font-size: 56.25%; 
-    }
+    } 
+}
+
+@media only screen and (max-width: 31.25em) {
+    html {
+        font-size: 50%;  
+    } 
 
 }
+
+
 
