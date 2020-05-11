@@ -65,7 +65,7 @@ const showQuestions = (question) => {
 	question.options.forEach((option, index) => {
 		index++;
 		const button = document.createElement("button");
-		button.innerHTML = option;
+		button.textContent = option;
 		button.classList.add("quiz__options-list");
 		button.classList.add(`quiz__options-list-${index}`);
 		quizList.classList.remove("pointer-fix");
@@ -124,7 +124,7 @@ const checkAnswer = (event) => {
 		// Small delay before showing scores page;
 		setTimeout(() => {
 			showResults();
-		}, 600);
+		}, 800);
 	}
 };
 
@@ -163,10 +163,10 @@ const questions = [
 	{
 		question: "Inside which HTML element do we put the JavaScript?",
 		options: [
-			'&lt;javascript&gt;',
-			'&lt;link&gt;',
-			'&lt;style&gt;',
-			'&lt;script&gt;',
+			'<javascript>',
+			'<link>',
+			'<style>',
+			'<script>',
 		],
 		answer: 4,
 	},
@@ -174,10 +174,10 @@ const questions = [
 	{
 		question: `What is the correct syntax for referring to an external script called "app.js"?`,
 		options: [
-			'&lt;script name="app.js"&gt;',
-			'&lt;script href="app.js"&gt;',
-			'&lt;script src="app.js"&gt;',
-			'&lt;script url="app.js"&gt;',
+			'<script name="app.js">',
+			'<script href="app.js">',
+			'<script src="app.js">',
+			'<script url="app.js">',
 		],
 		answer: 3,
 	},
