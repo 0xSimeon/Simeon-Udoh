@@ -197,7 +197,7 @@ quiz questions styles
 .pointer-fix {
     pointer-events: none; 
 }
-.white {
+.correct, .wrong {
     color: rgba(255, 255, 255, 1); 
 }
 
