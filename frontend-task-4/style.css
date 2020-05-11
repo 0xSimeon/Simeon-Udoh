@@ -119,6 +119,7 @@ quiz questions styles
 .quiz__score-number {
     font-size: 2em; 
     font-family: 'Fredericka the Great', cursive; 
+    font-weight: 700;
 }
 
 .quiz__counter-question, 
@@ -262,7 +263,7 @@ quiz questions styles
 	.quiz__counter-number,
 	.quiz__score-number {
         font-size: 3em;
-        font-weight: 700; 
+         
 
 	}
 }
